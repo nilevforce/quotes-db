@@ -4,7 +4,9 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js",
+    "import:quotes": "node src/scripts/importQuotes.js",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate"
   },
   "keywords": [],
   "author": "Nikolai Levchenko",
@@ -12,10 +14,12 @@
   "description": "",
   "dependencies": {
     "csv-parser": "^3.2.0",
+    "dotenv": "^17.0.1",
     "pg": "^8.16.3",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
-    "eslint-config-airbnb-base": "^15.0.0"
+    "eslint-config-airbnb-base": "^15.0.0",
+    "sequelize-cli": "^6.6.3"
   }
 }

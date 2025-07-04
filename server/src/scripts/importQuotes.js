@@ -1,14 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const csv = require('csv-parser');
-const {
-  Quote,
-  Category,
-  QuoteCategory,
-  sequelize,
-} = require('../models/index.js');
+const db = require('../db/models/index');
 
-const CSV_FILENAME = path.resolve(__dirname, '../data/quotes.csv');
+const CSV_FILENAME = path.resolve(__dirname, './data/quotes.csv');
 
 const validateAndSplitCategories = (categoriesStr) => {
   const categories = categoriesStr.split(', ');
@@ -41,14 +36,14 @@ const importCategories = async () => {
       });
 
       if (categoriesToCreate.length >= BATCH_SIZE) {
-        await Category.bulkCreate(categoriesToCreate, { ignoreDuplicates: true });
+        await db.Category.bulkCreate(categoriesToCreate, { ignoreDuplicates: true });
         console.log(`Batch of ${categoriesToCreate.length} categories has been added.`);
         categoriesToCreate.length = 0;
       }
     }
 
     if (categoriesToCreate.length > 0) {
-      await Category.bulkCreate(categoriesToCreate, { ignoreDuplicates: true });
+      await db.Category.bulkCreate(categoriesToCreate, { ignoreDuplicates: true });
       console.log(`Batch of ${categoriesToCreate.length} categories has been added.`);
     }
 
@@ -65,7 +60,7 @@ const insertQuoteBatch = async (quoteBatch) => {
   const quoteCategoryPairs = [];
 
   try {
-    const createdQuotes = await Quote.bulkCreate(quoteBatch, { returning: true });
+    const createdQuotes = await db.Quote.bulkCreate(quoteBatch, { returning: true });
     console.log(`Batch of ${quoteBatch.length} quotes has been added.`);
 
     createdQuotes.forEach((quote, idx) => {
@@ -74,13 +69,13 @@ const insertQuoteBatch = async (quoteBatch) => {
 
       categoryIds.forEach(
         (catId) => quoteCategoryPairs.push({
-          QuoteId: quoteId,
-          CategoryId: catId,
+          quoteId,
+          categoryId: catId,
         }),
       );
     });
 
-    await QuoteCategory.bulkCreate(quoteCategoryPairs, { ignoreDuplicates: true });
+    await db.QuoteCategory.bulkCreate(quoteCategoryPairs, { ignoreDuplicates: true });
     console.log(`Batch of ${quoteCategoryPairs.length} quote-category pairs has been added.`);
   } catch (error) {
     console.error('Error insert quote batch', error);
@@ -94,7 +89,7 @@ const importQuotes = async () => {
   const quotesToCreate = [];
 
   try {
-    const categoryList = await Category.findAll();
+    const categoryList = await db.Category.findAll();
     const categoryMap = new Map(
       categoryList.map((cat) => [cat.name, cat.id]),
     );
@@ -139,17 +134,14 @@ const importQuotes = async () => {
 
 const startImport = async () => {
   try {
-    console.time('⏱️ Время импорта');
-    await sequelize.sync({ force: true });
+    console.time('Время импорта');
     await importCategories();
     await importQuotes();
     console.log('Import has been finished.');
   } catch (error) {
     console.error('Error importing data', error);
   } finally {
-    await sequelize.close();
-    console.log('The database connection has been closed.');
-    console.timeEnd('⏱️ Время импорта');
+    console.timeEnd('Время импорта');
   }
 };
 
