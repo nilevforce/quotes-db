@@ -26,7 +26,17 @@ const Quote = sequelize.define('Quote', {
   },
 });
 
-const QuoteCategory = sequelize.define('QuoteCategory', {}, { timestamps: false });
+const QuoteCategory = sequelize.define(
+  'QuoteCategory',
+  {},
+  {
+    timestamps: false,
+    indexes: [
+      { unique: false, fields: ['QuoteId'] },
+      { unique: false, fields: ['CategoryId'] },
+    ],
+  },
+);
 
 Quote.belongsToMany(Category, { through: QuoteCategory });
 Category.belongsToMany(Quote, { through: QuoteCategory });
