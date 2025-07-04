@@ -21,9 +21,14 @@ const validateAndSplitCategories = (categoriesStr) => {
   return isValid ? categories : [];
 };
 
+const formattingAuthor = (author) => {
+  const formattedAuthor = author.split(',')[0].trim().slice(0, 255);
+  return formattedAuthor || null;
+};
+
 /* eslint-disable no-restricted-syntax */
 const importCategories = async () => {
-  const BATCH_SIZE = 10000;
+  const BATCH_SIZE = 30000;
 
   const stream = fs.createReadStream(CSV_FILENAME).pipe(csv());
   const categoriesToCreate = [];
@@ -31,8 +36,8 @@ const importCategories = async () => {
     for await (const row of stream) {
       const categories = validateAndSplitCategories(row.category);
       if (categories.length === 0) continue;
-      categories.forEach((categoryName) => {
-        categoriesToCreate.push({ name: categoryName });
+      categories.forEach((catName) => {
+        categoriesToCreate.push({ name: catName });
       });
 
       if (categoriesToCreate.length >= BATCH_SIZE) {
@@ -104,9 +109,12 @@ const importQuotes = async () => {
         return acc;
       }, []);
 
+      const formattedAuthor = formattingAuthor(row.author);
+      if (!formattedAuthor) continue;
+
       quotesToCreate.push({
         text: row.quote,
-        author: row.author.split(',')[0].trim().slice(0, 255),
+        author: formattedAuthor,
         categoryIds,
       });
 
