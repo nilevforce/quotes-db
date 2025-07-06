@@ -28,8 +28,12 @@ module.exports = {
       },
     );
 
-    await queryInterface.addIndex('QuoteCategory', ['quoteId']);
-    await queryInterface.addIndex('QuoteCategory', ['categoryId']);
+    await queryInterface.addIndex('QuoteCategory', ['quoteId'], {
+      name: 'quoteId_index',
+    });
+    await queryInterface.addIndex('QuoteCategory', ['categoryId'], {
+      name: 'categoryId_index',
+    });
   },
 
   async down(queryInterface, Sequelize) {

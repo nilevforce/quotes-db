@@ -1,12 +1,13 @@
 {
   "name": "quotes-db-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "import:quotes": "node src/scripts/importQuotes.js",
-    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate"
+    "dev": "nodemon server.js",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate",
+    "import:quotes": "node src/scripts/importQuotes.js"
   },
   "keywords": [],
   "author": "Nikolai Levchenko",
@@ -15,11 +16,13 @@
   "dependencies": {
     "csv-parser": "^3.2.0",
     "dotenv": "^17.0.1",
+    "express": "^5.1.0",
     "pg": "^8.16.3",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^15.0.0",
+    "nodemon": "^3.1.10",
     "sequelize-cli": "^6.6.3"
   }
 }

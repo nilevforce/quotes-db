@@ -134,14 +134,14 @@ const importQuotes = async () => {
 
 const startImport = async () => {
   try {
-    console.time('Время импорта');
+    console.time('The import time was');
     await importCategories();
     await importQuotes();
     console.log('Import has been finished.');
   } catch (error) {
     console.error('Error importing data', error);
   } finally {
-    console.timeEnd('Время импорта');
+    console.timeEnd('The import time was');
   }
 };
 
