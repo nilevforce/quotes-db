@@ -26,7 +26,6 @@ const quotesQuerySchema = Joi.object({
 
 const validateQuotesQuery = (req, res, next) => {
   const params = req.query;
-  console.log(params);
   const { error } = quotesQuerySchema
     .validate(params);
 

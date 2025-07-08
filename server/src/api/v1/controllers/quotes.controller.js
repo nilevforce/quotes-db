@@ -14,6 +14,11 @@ const getQuotes = catchAsync(async (req, res) => {
     limit,
     offset,
     order: [['id', 'ASC']],
+    include: {
+      model: db.Category,
+      attributes: ['name'],
+      through: { attributes: [] },
+    },
   });
 
   if (!quotes) {
@@ -37,9 +42,6 @@ const getQuoteById = catchAsync(async (req, res) => {
   if (!quote) {
     throw new ApiError(httpStatus.NOT_FOUND, `Quote with ID ${quoteId} not found`);
   }
-
-  quote.dataValues.categories = quote.dataValues.Categories.map((cat) => cat.name);
-  delete quote.dataValues.Categories;
 
   return res.json(quote);
 });

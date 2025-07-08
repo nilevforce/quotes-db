@@ -1,3 +1,15 @@
+/* eslint-disable no-param-reassign */
+const afterFind = (results) => {
+  if (!results) return;
+  const quotes = Array.isArray(results) ? results : [results];
+  quotes.forEach((quote) => {
+    if (quote.Categories) {
+      quote.dataValues.categories = quote.Categories.map(({ name }) => name);
+      delete quote.dataValues.Categories;
+    }
+  });
+};
+
 module.exports = (sequelize, DataTypes) => {
   const Quote = sequelize.define(
     'Quote',
@@ -9,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       author: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+    },
+    {
+      hooks: {
+        afterFind,
       },
     },
   );
