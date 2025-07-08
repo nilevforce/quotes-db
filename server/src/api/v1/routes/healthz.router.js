@@ -3,7 +3,6 @@ const controllers = require('../controllers');
 
 const router = express.Router();
 
-router.get('/', controllers.getQuotes);
-router.get('/:id', controllers.getQuoteById);
+router.get('/', controllers.checkHealthz);
 
 module.exports = router;

@@ -2,15 +2,10 @@ const {
   getQuotes,
   getQuoteById,
 } = require('./quotes.controller');
-
-const {
-  getCategories,
-  getCategoryById,
-} = require('./categories.controller');
+const { checkHealthz } = require('./healthz.controller');
 
 module.exports = {
   getQuotes,
   getQuoteById,
-  getCategories,
-  getCategoryById,
+  checkHealthz,
 };
