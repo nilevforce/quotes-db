@@ -1,8 +1,16 @@
 const httpStatus = require('http-status').default;
-const ApiError = require('../utils/ApiError');
+const { ApiError } = require('../utils');
 
-const notFound = (req, res, next) => {
-  next(new ApiError(httpStatus.NOT_FOUND, 'Method not Found'));
+const notFoundHandler = (req, res, next) => {
+  const statusCode = httpStatus.NOT_FOUND;
+  const message = httpStatus[statusCode];
+
+  next(
+    new ApiError({
+      statusCode,
+      message,
+    }),
+  );
 };
 
-module.exports = notFound;
+module.exports = notFoundHandler;

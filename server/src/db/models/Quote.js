@@ -1,13 +1,17 @@
 /* eslint-disable no-param-reassign */
 const afterFind = (results) => {
-  if (!results) return;
-  const quotes = Array.isArray(results) ? results : [results];
-  quotes.forEach((quote) => {
-    if (quote.Categories) {
-      quote.dataValues.categories = quote.Categories.map(({ name }) => name);
-      delete quote.dataValues.Categories;
-    }
-  });
+  if (results) {
+    const quotes = Array.isArray(results) ? results : [results];
+    quotes.forEach((quote) => {
+      if (quote.allCategories) {
+        quote.dataValues.categories = quote.allCategories.map(
+          (category) => category.name,
+        );
+        delete quote.dataValues.allCategories;
+        delete quote.dataValues.matchedCategories;
+      }
+    });
+  }
 };
 
 module.exports = (sequelize, DataTypes) => {
@@ -32,6 +36,14 @@ module.exports = (sequelize, DataTypes) => {
 
   Quote.associate = (models) => {
     Quote.belongsToMany(models.Category, {
+      as: 'allCategories',
+      through: models.QuoteCategory,
+      foreignKey: 'quoteId',
+      otherKey: 'categoryId',
+    });
+
+    Quote.belongsToMany(models.Category, {
+      as: 'matchedCategories',
       through: models.QuoteCategory,
       foreignKey: 'quoteId',
       otherKey: 'categoryId',

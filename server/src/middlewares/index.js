@@ -2,16 +2,14 @@ const {
   errorConverter,
   errorHandler,
 } = require('./error.middleware');
-const requestLogger = require('./requestLogger.middleware');
-const notFound = require('./notFound.middleware');
-const validateQuoteId = require('./quoteIdValidator.middleware');
-const validateQuotesQuery = require('./quotesQueryValidator.middleware');
+const successResponse = require('./success.middlware');
+const requestLogger = require('./logger.middleware');
+const notFoundHandler = require('./notFound.middleware');
 
 module.exports = {
-  validateQuotesQuery,
-  validateQuoteId,
+  successResponse,
   errorConverter,
   errorHandler,
-  notFound,
+  notFoundHandler,
   requestLogger,
 };

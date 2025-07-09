@@ -1,33 +1,25 @@
+/* eslint-disable no-unused-vars */
 const httpStatus = require('http-status').default;
-const ApiError = require('../utils/ApiError');
+const { ApiError } = require('../utils');
 
 const errorConverter = (err, req, res, next) => {
-  let error = err;
-
-  if (!(error instanceof ApiError)) {
-    const statusCode = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
-    const message = error.message || httpStatus[statusCode];
-    error = new ApiError(statusCode, message, false, err.stack);
+  if (err instanceof ApiError) {
+    return next(err);
   }
 
-  next(error);
-};
+  const statusCode = err.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
+  const message = err.message || httpStatus[statusCode];
 
-const errorHandler = (err, req, res, next) => {
-  const statusCode = err.statusCode ?? httpStatus.INTERNAL_SERVER_ERROR;
-  let { message } = err;
-
-  if (!err.statusCode) {
-    message = httpStatus[statusCode];
-  }
-
-  const response = {
-    code: statusCode,
+  const error = new ApiError({
+    statusCode,
     message,
-  };
+  });
 
-  res.status(statusCode).json(response);
+  return next(error);
 };
+
+const errorHandler = (err, req, res, next) => res
+  .status(err.statusCode).json(err.toJSON());
 
 module.exports = {
   errorConverter,
