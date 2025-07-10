@@ -1,15 +1,7 @@
-const {
-  errorConverter,
-  errorHandler,
-} = require('./error.middleware');
-const successResponse = require('./success.middlware');
-const requestLogger = require('./logger.middleware');
-const notFoundHandler = require('./notFound.middleware');
+const errorHandler = require('./error-handler.middleware');
+const validateRequest = require('./validate-request');
 
 module.exports = {
-  successResponse,
-  errorConverter,
   errorHandler,
-  notFoundHandler,
-  requestLogger,
+  validateRequest,
 };

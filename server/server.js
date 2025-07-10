@@ -1,8 +1,7 @@
 require('dotenv/config');
+const config = require('./src/config/config');
 const app = require('./src/app');
 
-const port = process.env.APP_PORT || 3000;
-
-app.listen(port, () => {
-  console.log(`Quotes API service is listening on port ${port}`);
+app.listen(config.port, () => {
+  console.log(`Application is running on port ${config.port}`);
 });

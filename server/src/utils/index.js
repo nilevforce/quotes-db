@@ -1,9 +1,5 @@
-const ApiSuccess = require('./ApiSuccess');
-const ApiError = require('./ApiError');
-const { catchAsync } = require('./catchAsync');
+const getErrorMessage = require('./get-error-message');
 
 module.exports = {
-  ApiSuccess,
-  ApiError,
-  catchAsync,
+  getErrorMessage,
 };

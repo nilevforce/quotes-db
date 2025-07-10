@@ -1,14 +1,10 @@
-const httpStatus = require('http-status').default;
 const { Op } = require('sequelize');
-const db = require('../../db/models');
-const {
-  ApiError,
-  catchAsync,
-} = require('../../utils');
+const { StatusCodes } = require('http-status-codes');
+const db = require('../database/models');
+const { EntityNotFound } = require('../errors');
 
 // Getting all quotes
-const getQuotes = catchAsync(async (req, res) => {
-  console.log(req.query);
+const getQuotes = async (req, res) => {
   const {
     limit = 5,
     offset = 0,
@@ -45,49 +41,47 @@ const getQuotes = catchAsync(async (req, res) => {
   });
 
   if (quotes.length === 0) {
-    throw new ApiError({
-      statusCode: httpStatus.NOT_FOUND,
+    throw new EntityNotFound({
+      statusCode: StatusCodes.NOT_FOUND,
+      errorCode: 'NOT_FOUND',
       message: 'Quotes not found',
     });
   }
 
-  res.success({
-    statusCode: httpStatus.OK,
+  res.status(StatusCodes.OK).json({
     data: quotes,
     meta: {
       limit,
       offset,
-      count: quotes.length,
     },
   });
-});
+};
 
 // Getting quotes by ID
-const getQuoteById = catchAsync(async (req, res) => {
-  const quoteId = req.params.id;
+// const getQuoteById = async (req, res) => {
+//   const quoteId = req.params.id;
 
-  const quote = await db.Quote.findByPk(quoteId, {
-    attributes: ['id', 'text', 'author'],
-    include: {
-      model: db.Category,
-      attributes: ['name'],
-      as: 'allCategories',
-    },
-  });
+//   const quote = await db.Quote.findByPk(quoteId, {
+//     attributes: ['id', 'text', 'author'],
+//     include: {
+//       model: db.Category,
+//       attributes: ['name'],
+//       as: 'allCategories',
+//     },
+//   });
 
-  if (!quote) {
-    throw new ApiError({
-      statusCode: httpStatus.NOT_FOUND,
-      message: `Quote with ID ${quoteId} not found`,
-    });
-  }
+//   if (!quote) {
+//     throw new ApiError({
+//       statusCode: httpStatus.NOT_FOUND,
+//       message: `Quote with ID ${quoteId} not found`,
+//     });
+//   }
 
-  return res.success({
-    data: quote,
-  });
-});
+//   return res.success({
+//     data: quote,
+//   });
+// };
 
 module.exports = {
   getQuotes,
-  getQuoteById,
 };
