@@ -18,6 +18,7 @@ const validateRequest = (schema, location = 'body') => (req, res, next) => {
   }
 
   req[location] = value;
+
   return next();
 };
 

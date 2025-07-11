@@ -15,6 +15,4 @@ const paginationSchema = {
     .default(0),
 };
 
-module.exports = {
-  paginationSchema,
-};
+module.exports = paginationSchema;

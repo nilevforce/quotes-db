@@ -3,6 +3,7 @@ const Joi = require('joi');
 const CustomError = require('../errors/CustomError');
 const { getErrorMessage } = require('../utils');
 
+/* eslint-disable-next-line no-unused-vars */
 const errorHandler = (err, req, res, next) => {
   let code = 'INTERNAL_SERVER_ERROR';
   let statusCode = StatusCodes[code];
