@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const paginationSchema = require('./pagination.schema');
+const paginationSchema = require('../pagination.schema');
 
 const author = Joi
   .string()

@@ -1,7 +1,9 @@
-const quotesQuerySchema = require('./quotes-query.schema');
-const quoteIdSchema = require('./quote-id.schema');
+const quotesQuerySchema = require('./quotes/quotes-query.schema');
+const quoteIdSchema = require('./quotes/quote-id.schema');
+const randomQuotesQuerySchema = require('./quotes/random-quotes-query.schema');
 
 module.exports = {
-  quotesQuerySchema,
   quoteIdSchema,
+  quotesQuerySchema,
+  randomQuotesQuerySchema,
 };

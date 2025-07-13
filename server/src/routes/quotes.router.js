@@ -12,6 +12,13 @@ router.get(
   controllers.getQuotes,
 );
 
+// Get random quotes
+router.get(
+  '/random',
+  middlewares.validateRequest(schemas.randomQuotesQuerySchema, 'query'),
+  controllers.getRandomQuotes,
+);
+
 // Get quote by id
 router.get(
   '/:id',
