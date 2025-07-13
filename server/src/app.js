@@ -7,6 +7,7 @@ const app = express();
 app.use(middlewares.morganMiddleware);
 
 app.use('/api/quotes', routers.quotesRouter);
+app.use('/api/categories', routers.categoriesRouter);
 
 app.use(middlewares.errorHandler);
 

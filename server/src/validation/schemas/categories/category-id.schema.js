@@ -4,8 +4,8 @@ const id = Joi.number()
   .integer()
   .required();
 
-const quoteIdSchema = Joi.object({
+const categoryIdSchema = Joi.object({
   id,
 });
 
-module.exports = quoteIdSchema;
+module.exports = categoryIdSchema;
