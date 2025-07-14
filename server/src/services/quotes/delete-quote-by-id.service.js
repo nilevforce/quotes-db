@@ -2,10 +2,15 @@ const { StatusCodes } = require('http-status-codes');
 const db = require('../../database/models');
 const { EntityNotFound } = require('../../errors');
 
-const deleteQuoteById = async (id) => {
-  const countRows = await db.Quote.destroy({
-    where: { id },
-  });
+const deleteQuoteById = async (id, options = {}) => {
+  const { transaction } = options;
+
+  const countRows = await db.Quote.destroy(
+    {
+      where: { id },
+      transaction,
+    },
+  );
 
   if (!countRows) {
     throw new EntityNotFound({

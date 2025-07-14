@@ -29,8 +29,16 @@ router.get(
 // Create quote
 router.post(
   '/',
-  middlewares.validateRequest(schemas.quoteBodySchema, 'body'),
+  middlewares.validateRequest(schemas.quoteBodyPostSchema, 'body'),
   controllers.createQuote,
+);
+
+// Update quote
+router.patch(
+  '/:id',
+  middlewares.validateRequest(schemas.quoteIdSchema, 'params'),
+  middlewares.validateRequest(schemas.quoteBodyPatchSchema, 'body'),
+  controllers.updateQuoteById,
 );
 
 // Delete quote by id

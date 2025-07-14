@@ -2,10 +2,16 @@ const { StatusCodes } = require('http-status-codes');
 const db = require('../../database/models');
 const { EntityNotFound } = require('../../errors');
 
-const fetchCategoryById = async (id) => {
-  const category = await db.Category.findByPk(id, {
-    attributes: ['id', 'name'],
-  });
+const fetchCategoryById = async (id, options = {}) => {
+  const { transaction } = options;
+
+  const category = await db.Category.findByPk(
+    id,
+    {
+      attributes: ['id', 'name'],
+      transaction,
+    },
+  );
 
   if (!category) {
     throw new EntityNotFound({

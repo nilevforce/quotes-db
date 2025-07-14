@@ -2,15 +2,21 @@ const { StatusCodes } = require('http-status-codes');
 const db = require('../../database/models');
 const { EntityNotFound } = require('../../errors');
 
-const fetchQuoteById = async (id) => {
-  const quote = await db.Quote.findByPk(id, {
-    attributes: ['id', 'text', 'author'],
-    include: {
-      model: db.Category,
-      attributes: ['name'],
-      as: 'allCategories',
+const fetchQuoteById = async (id, options = {}) => {
+  const { transaction } = options;
+
+  const quote = await db.Quote.findByPk(
+    id,
+    {
+      attributes: ['id', 'text', 'author'],
+      include: {
+        model: db.Category,
+        attributes: ['name'],
+        as: 'allCategories',
+      },
+      transaction,
     },
-  });
+  );
 
   if (!quote) {
     throw new EntityNotFound({

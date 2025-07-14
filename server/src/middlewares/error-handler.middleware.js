@@ -1,10 +1,13 @@
 const { StatusCodes } = require('http-status-codes');
 const Joi = require('joi');
+const logger = require('../logger');
 const CustomError = require('../errors/CustomError');
 const { getErrorMessage } = require('../utils');
 
 /* eslint-disable-next-line no-unused-vars */
 const errorHandler = (err, req, res, next) => {
+  logger.error({ message: `${err.stack}` });
+
   let code = 'INTERNAL_SERVER_ERROR';
   let statusCode = StatusCodes[code];
   const message = getErrorMessage(err) || 'An unexpected error occurred';
@@ -18,7 +21,9 @@ const errorHandler = (err, req, res, next) => {
         message: 'Validation error',
         code,
         errors: err.details.map((item) => ({
-          field: item.context.label,
+          field: item.context.key !== undefined
+            ? item.context.label
+            : undefined,
           message: item.message,
         })),
       },

@@ -31,10 +31,10 @@ const categories = Joi
   .min(1)
   .unique();
 
-const quoteBodySchema = Joi.object({
+const quoteBodyPostSchema = Joi.object({
   text,
   author,
   categories,
 });
 
-module.exports = quoteBodySchema;
+module.exports = quoteBodyPostSchema;

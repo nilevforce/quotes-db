@@ -11,15 +11,17 @@ const fetchCategories = async ({
   const whereQuery = {};
   if (name) whereQuery.name = { [Op.iLike]: `%${name}%` };
 
-  const categories = await db.Category.findAll({
-    attributes: ['id', 'name'],
-    limit,
-    offset,
-    order: [['id', 'ASC']],
-    where: whereQuery,
-  });
+  const categories = await db.Category.findAll(
+    {
+      attributes: ['id', 'name'],
+      limit,
+      offset,
+      order: [['id', 'ASC']],
+      where: whereQuery,
+    },
+  );
 
-  if (categories.length === 0) {
+  if (categories.length === 0 || !categories) {
     throw new EntityNotFound({
       statusCode: StatusCodes.NOT_FOUND,
       errorCode: 'NOT_FOUND',
