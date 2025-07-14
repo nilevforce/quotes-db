@@ -1,6 +1,6 @@
 const winston = require('winston');
 const DailyRotateFile = require('winston-daily-rotate-file');
-const config = require('./config/config');
+const { appConfig } = require('./config');
 
 const logLevels = {
   error: 0,
@@ -12,7 +12,7 @@ const logLevels = {
 
 const logger = winston.createLogger({
   levels: logLevels,
-  level: config.log,
+  level: appConfig.log,
   format: winston.format.combine(
     winston.format.errors({ stack: true }),
     winston.format.timestamp({

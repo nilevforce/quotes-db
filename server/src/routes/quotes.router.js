@@ -12,13 +12,6 @@ router.get(
   controllers.getQuotes,
 );
 
-// Create quote
-router.post(
-  '/',
-  middlewares.validateRequest(schemas.quoteBodySchema, 'body'),
-  controllers.createQuote,
-);
-
 // Get random quotes
 router.get(
   '/random',
@@ -31,6 +24,20 @@ router.get(
   '/:id',
   middlewares.validateRequest(schemas.quoteIdSchema, 'params'),
   controllers.getQuoteById,
+);
+
+// Create quote
+router.post(
+  '/',
+  middlewares.validateRequest(schemas.quoteBodySchema, 'body'),
+  controllers.createQuote,
+);
+
+// Delete quote by id
+router.delete(
+  '/:id',
+  middlewares.validateRequest(schemas.quoteIdSchema, 'params'),
+  controllers.deleteQuoteById,
 );
 
 module.exports = router;

@@ -1,11 +1,14 @@
-/* eslint-disable */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 const fs = require('fs');
 const path = require('path');
-const config = require('../../config/config').database;
 const Sequelize = require('sequelize');
 const process = require('process');
+const { sequelizeConfig } = require('../../config');
 
 const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = sequelizeConfig[env];
 const db = {};
 
 let sequelize;
