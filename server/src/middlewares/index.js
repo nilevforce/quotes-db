@@ -1,9 +1,13 @@
 const errorHandler = require('./error-handler.middleware');
 const validateRequest = require('./validate-request');
-const morganMiddleware = require('./morgan.middleware');
+const morgan = require('./morgan.middleware');
+const cors = require('./cors.middleware');
+const json = require('./json.middleware');
 
 module.exports = {
   errorHandler,
   validateRequest,
-  morganMiddleware,
+  morgan,
+  json,
+  cors,
 };
