@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Quote.associate = (models) => {
+    // Getting list of all the categories that relate to a quote
     Quote.belongsToMany(models.Category, {
       as: 'allCategories',
       through: models.QuoteCategory,
@@ -42,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'categoryId',
     });
 
+    // Getting list of categories for which a match was found
     Quote.belongsToMany(models.Category, {
       as: 'matchedCategories',
       through: models.QuoteCategory,

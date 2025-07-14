@@ -17,7 +17,10 @@ const errorHandler = (err, req, res, next) => {
       error: {
         message: 'Validation error',
         code,
-        errors: err.details.map((item) => ({ message: item.message })),
+        errors: err.details.map((item) => ({
+          field: item.context.label,
+          message: item.message,
+        })),
       },
     });
   }

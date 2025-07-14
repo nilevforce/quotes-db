@@ -3,6 +3,7 @@ const fetchQuoteById = require('./quotes/fetch-quote-by-id.service');
 const fetchRandomQuotes = require('./quotes/fetch-random-quotes.service');
 const fetchCategories = require('./categories/fetch-categories.service');
 const fetchCategoryById = require('./categories/fetch-category-by-id.service');
+const createQuote = require('./quotes/create-quote.service');
 
 module.exports = {
   fetchQuotes,
@@ -10,4 +11,5 @@ module.exports = {
   fetchRandomQuotes,
   fetchCategories,
   fetchCategoryById,
+  createQuote,
 };

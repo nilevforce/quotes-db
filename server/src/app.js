@@ -4,6 +4,7 @@ const routers = require('./routes');
 
 const app = express();
 
+app.use(express.json());
 app.use(middlewares.morganMiddleware);
 
 app.use('/api/quotes', routers.quotesRouter);

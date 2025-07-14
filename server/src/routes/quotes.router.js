@@ -12,6 +12,13 @@ router.get(
   controllers.getQuotes,
 );
 
+// Create quote
+router.post(
+  '/',
+  middlewares.validateRequest(schemas.quoteBodySchema, 'body'),
+  controllers.createQuote,
+);
+
 // Get random quotes
 router.get(
   '/random',
