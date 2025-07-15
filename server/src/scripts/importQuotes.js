@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const csv = require('csv-parser');
-const db = require('../db/models/index');
+const db = require('../database/models');
 
 const CSV_FILENAME = path.resolve(__dirname, './data/quotes.csv');
 
