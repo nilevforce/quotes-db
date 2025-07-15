@@ -67,15 +67,6 @@ http://localhost:8080
 
 -----
 
-## Dependencies
-
-  * Node.js
-  * Docker & Docker Compose
-  * Sequelize ORM
-  * Adminer (via Docker)
-
------
-
 ## API Endpoints
 
 All responses are returned in JSON format. The base path for all requests is `/api/quotes`.
@@ -90,7 +81,7 @@ All responses are returned in JSON format. The base path for all requests is `/a
 
   * **Query Parameters**:
 
-      * `limit` — maximum number of records (default: 10, max: 50)
+      * `limit` — maximum number of records (default: 5, max: 50)
       * `offset` — offset (for pagination)
       * `author` — filter by author
       * `category` — filter by category
@@ -146,7 +137,7 @@ All responses are returned in JSON format. The base path for all requests is `/a
 
   * **Query Parameters**:
 
-      * `limit` — number of random quotes (default: 1, max: 50)
+      * `limit` — number of random quotes (default: 3, max: 20)
 
   * **Response**:
 
